@@ -1,1 +1,1 @@
-# SuperBeam Simulation coming from the Euronu
+# SuperBeam Simulation from Euronu
