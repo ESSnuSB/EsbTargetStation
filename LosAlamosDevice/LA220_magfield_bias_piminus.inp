@@ -1,0 +1,297 @@
+TITLE
+Los Alamos Device
+* Set the defaults for precision simulations
+* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8
+DEFAULTS                                                              NEW-DEFA
+* Define the beam characteristics
+BEAM              2.               3140.                            1.PION-
+* External source file:
+SOURCE
+GEOBEGIN                                                              COMBNAME
+    0    0          
+* ---------------------------------------------------------------------------- *
+*                        BODIES
+* ---------------------------------------------------------------------------- *
+* ********************************************************************
+* Outer blackhole:
+RPP BH         -5000. 5000. -5000. 5000. -5000. 5000.
+* ********************************************************************
+* Tunnel:
+ZCC Tunnel     0.0 0.0 250.
+* Plane that determines the start of the tunnel:
+XYP Tstart     -200.
+* Plane that determines the start of the structure:
+XYP LAstart    0.0
+* Plane just in front of the structure (for clear passage of source particles):
+XYP FrontPl    -1.
+* Plane that determines the back end of the structure:
+XYP LAend      220.
+* Scoring plane, right after the structure:
+XYP DetPl1     221.
+* ******* Additional slicing of tunnel for regional biasing **********
+* P1
+XYP TP1        500.
+* P
+XYP TP2        1000.
+* R1
+XYP TP3        1500.
+* R1
+XYP TP4        2000.
+* ********************************************************************
+* Scoring plane, at the end of the tunnel:
+XYP DetPl2     2500.
+* Plane that determines the end of the decay tunnel:
+XYP Tend       2501.
+* ********************************************************************
+* Outer octagonal shell
+* ********************************************************************
+* Outer planes, starting to the far right going counter clockwise
+*
+PLA SHO1       1. 0.0 0.0 100. 0.0 0.0
+PLA SHO2       1. 1. 0.0 70.710678118655 70.710678118655 0.0
+PLA SHO3       0.0 1. 0.0 0.0 100. 0.0
+PLA SHO4       -1. 1. 0.0 -70.710678118655 70.710678118655 0.0
+PLA SHO5       -1. 0.0 0.0 -100. 0.0 0.0
+PLA SHO6       -1. -1. 0.0 -70.710678118655 -70.710678118655 0.0
+PLA SHO7       0.0 -1. 0.0 0.0 -100. 0.0
+PLA SHO8       1. -1. 0.0 70.710678118655 -70.710678118655 0.0
+*
+* ********************************************************************
+* Inner planes, starting to the far right going counter clockwise
+*
+PLA SHI1       1. 0.0 0.0 85. 0.0 0.0
+PLA SHI2       1. 1. 0.0 60.104076400857 60.104076400857 0.0
+PLA SHI3       0.0 1. 0.0 0.0 85. 0.0
+PLA SHI4       -1. 1. 0.0 -60.104076400857 60.104076400857 0.0
+PLA SHI5       -1. 0.0 0.0 -85. 0.0 0.0
+PLA SHI6       -1. -1. 0.0 -60.104076400857 -60.104076400857 0.0
+PLA SHI7       0.0 -1. 0.0 0.0 -85. 0.0
+PLA SHI8       1. -1. 0.0 60.104076400857 -60.104076400857 0.0
+*
+* *********************************************************************
+* Diagonal to cut the corners of the outer shell:
+* *********************************************************************
+* Name logic: SHell Diagonal Angle
+PLA SHD22p5    -0.3826834323651 0.9238795325113 0.0 0.0 0.0 0.0
+PLA SHD67p5    -0.9238795325113 0.3826834323651 0.0 0.0 0.0 0.0
+PLA SHD112p5   -0.9238795325113 -0.3826834323651 0.0 0.0 0.0 0.0
+PLA SHD157p5   -0.3826834323651 -0.9238795325113 0.0 0.0 0.0 0.0
+*
+* *********************************************************************
+* The vanes!!
+* *********************************************************************
+* End planes, starting to the far right going counter clockwise
+* Name logic: Vane Number End
+PLA VE1        1. 0.0 0.0 60. 0.0 0.0
+PLA VE2        1. 1. 0.0 42.426406871193 42.426406871193 0.0
+PLA VE3        0.0 1. 0.0 0.0 60. 0.0
+PLA VE4        -1. 1. 0.0 -42.426406871193 42.426406871193 0.0
+PLA VE5        -1. 0.0 0.0 -60. 0.0 0.0
+PLA VE6        -1. -1. 0.0 -42.426406871193 -42.426406871193 0.0
+PLA VE7        0.0 -1. 0.0 0.0 -60. 0.0
+PLA VE8        1. -1. 0.0 42.426406871193 -42.426406871193 0.0
+*
+* Side planes, starting to the far right going counter clockwise
+* Name logic: Vane Diagonal Angle
+PLA VD10       -0.1736481776669 0.9848077530122 0.0 0.0 0.0 0.0
+PLA VD35       -0.5735764363510 0.8191520442890 0.0 0.0 0.0 0.0
+PLA VD55       -0.8191520442890 0.5735764363510 0.0 0.0 0.0 0.0
+PLA VD80       -0.9848077530122 0.1736481776669 0.0 0.0 0.0 0.0
+PLA VD100      -0.9848077530122 -0.1736481776669 0.0 0.0 0.0 0.0
+PLA VD125      -0.8191520442890 -0.5735764363510 0.0 0.0 0.0 0.0
+PLA VD145      -0.5735764363510 -0.8191520442890 0.0 0.0 0.0 0.0
+PLA VD170      -0.1736481776669 -0.9848077530122 0.0 0.0 0.0 0.0
+*
+* *********************************************************************
+* Inner core cylinder:
+ZCC LAcore     0.0 0.0 5.
+* *********************************************************************
+END
+* *********************************************************************
+* ---------------------------------------------------------------------------- *
+*                        REGIONS
+* ---------------------------------------------------------------------------- *
+* 1) Black Hole
+BLKBODY      5 +BH -Tunnel | +BH +Tunnel +Tstart | +BH +Tunnel -Tend
+* *************************
+* ******************************************************************************
+*             MAGNETIC FIELD REGIONS: DO NOT SHIFT ORDER!!!
+* ******************************************************************************
+* 2) Vacuum at the center of the structure, core vacuum
+VoCore       5 +LAcore  -FrontPl +LAend
+* 3) VACUUM between vanes: Magnetic field region
+VoLA         5 +SHD157p5 -VD170 +VE1 -LAcore -LAstart +LAend
+               | +SHD22p5  -VD10  +VE1 -LAcore -LAstart +LAend
+               | -SHD22p5  +VD35  +VE2 -LAcore -LAstart +LAend
+               | +SHD67p5  -VD55  +VE2 -LAcore -LAstart +LAend
+               | -SHD67p5  +VD80  +VE3 -LAcore -LAstart +LAend
+               | +SHD112p5 -VD100 +VE3 -LAcore -LAstart +LAend
+               | -SHD112p5 +VD125 +VE4 -LAcore -LAstart +LAend
+               | +SHD157p5 -VD145 +VE4 -LAcore -LAstart +LAend
+               | -SHD157p5 +VD170 +VE5 -LAcore -LAstart +LAend
+               | -SHD22p5  +VD10  +VE5 -LAcore -LAstart +LAend
+               | +SHD22p5  -VD35  +VE6 -LAcore -LAstart +LAend
+               | -SHD67p5  +VD55  +VE6 -LAcore -LAstart +LAend
+               | +SHD67p5  -VD80  +VE7 -LAcore -LAstart +LAend
+               | -SHD112p5 +VD100 +VE7 -LAcore -LAstart +LAend
+               | +SHD112p5 -VD125 +VE8 -LAcore -LAstart +LAend
+               | -SHD157p5 +VD145 +VE8 -LAcore -LAstart +LAend
+*
+* 4) Vacuum between vanes and the outer shell: circular field region
+VoCirc       5 +SHI1 -VE1 +SHD157p5 +SHD22p5  -LAstart +LAend
+               | +SHI2 -VE2 -SHD22p5  +SHD67p5  -LAstart +LAend
+               | +SHI3 -VE3 -SHD67p5  +SHD112p5 -LAstart +LAend
+               | +SHI4 -VE4 -SHD112p5 +SHD157p5 -LAstart +LAend
+               | +SHI5 -VE5 -SHD157p5 -SHD22p5  -LAstart +LAend
+               | +SHI6 -VE6 +SHD22p5  -SHD67p5  -LAstart +LAend
+               | +SHI7 -VE7 +SHD67p5  -SHD112p5 -LAstart +LAend
+               | +SHI8 -VE8 +SHD112p5 -SHD157p5 -LAstart +LAend
+*
+********************************************************************************
+* 5) Vacuum before the structure:
+Vofront      5 +Tunnel -LAcore -Tstart +LAstart | +LAcore -Tstart +FrontPl
+* 6) Vacuum outside, around the structure
+VoSur        5 +Tunnel -SHO3 -LAstart +LAend
+               | +Tunnel -SHO7 -LAstart +LAend
+               | +Tunnel -SHO5 +SHO3 +SHO7 -LAstart +LAend
+               | +Tunnel -SHO1 +SHO3 +SHO7 -LAstart +LAend
+               | +SHO1 -SHO2 +SHO3 -LAstart +LAend
+               | +SHO3 -SHO4 +SHO5 -LAstart +LAend
+               | +SHO5 -SHO6 +SHO7 -LAstart +LAend
+               | +SHO7 -SHO8 +SHO1 -LAstart +LAend
+* 7) Vacuum immediately behind the structure:
+VoDet1       5 +Tunnel  -LAend +DetPl1
+* 8) Vacuum Decay tunnel, region 1:
+VoDT1        5 +Tunnel -DetPl1 +TP1
+* 9) Vacuum Decay tunnel, region 2:
+VoDT2        5 +Tunnel -TP1 +TP2
+* 10) Vacuum Decay tunnel, region 3:
+VoDT3        5 +Tunnel -TP2 +TP3
+* 11) Vacuum Decay tunnel, region 4:
+VoDT4        5 +Tunnel -TP3 +TP4
+* 12) Vacuum Decay tunnel, region 5:
+VoDT5        5 +Tunnel -TP4 +DetPl2
+* 13) Scoring plane at the end of the decay tunnel:
+VoDet2       5 +Tunnel -DetPl2  +Tend
+* **********************
+* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+* 14) Outer shell:
+Shell        5 +SHO1 -SHI1 +SHD157p5 +SHD22p5  -LAstart +LAend
+               | +SHO2 -SHI2 -SHD22p5  +SHD67p5  -LAstart +LAend
+               | +SHO3 -SHI3 -SHD67p5  +SHD112p5 -LAstart +LAend
+               | +SHO4 -SHI4 -SHD112p5 +SHD157p5 -LAstart +LAend
+               | +SHO5 -SHI5 -SHD157p5 -SHD22p5  -LAstart +LAend
+               | +SHO6 -SHI6 +SHD22p5  -SHD67p5  -LAstart +LAend
+               | +SHO7 -SHI7 +SHD67p5  -SHD112p5 -LAstart +LAend
+               | +SHO8 -SHI8 +SHD112p5 -SHD157p5 -LAstart +LAend
+*
+* 15) Vanes:
+Vanes        5 +VD170 +VD10  +VE1 -LAcore -LAstart +LAend
+               | -VD35  +VD55  +VE2 -LAcore -LAstart +LAend
+               | -VD80  +VD100 +VE3 -LAcore -LAstart +LAend
+               | -VD125 +VD145 +VE4 -LAcore -LAstart +LAend
+               | -VD170 -VD10  +VE5 -LAcore -LAstart +LAend
+               | +VD35  -VD55  +VE6 -LAcore -LAstart +LAend
+               | +VD80  -VD100 +VE7 -LAcore -LAstart +LAend
+               | +VD125 -VD145 +VE8 -LAcore -LAstart +LAend
+*
+* **********************
+END
+GEOEND
+* ---------------------------------------------------------------------------- *
+*                        MATERIALS
+* ---------------------------------------------------------------------------- *
+ASSIGNMA    BLCKHOLE   BLKBODY
+ASSIGNMA      VACUUM   Vofront
+ASSIGNMA      VACUUM     VoSur
+ASSIGNMA      VACUUM    VoDet1
+ASSIGNMA      VACUUM    VoDet2
+ASSIGNMA      VACUUM     VoDT1
+ASSIGNMA      VACUUM     VoDT2
+ASSIGNMA      VACUUM     VoDT3
+ASSIGNMA      VACUUM     VoDT4
+ASSIGNMA      VACUUM     VoDT5
+ASSIGNMA      COPPER     Shell
+ASSIGNMA      COPPER     Vanes
+* ----------------------------------- Magnetic field on/off: ----------------- *
+ASSIGNMA      VACUUM    VoCore                           1.0
+ASSIGNMA      VACUUM      VoLA                           1.0
+ASSIGNMA      VACUUM    VoCirc                           1.0
+* ---------------------------------------------------------------------------- *
+*                        EXTRAS (Physics etc)
+* ---------------------------------------------------------------------------- *
+MGNFIELD         30.
+DISCARD     -NEUTRIE  -NEUTRIM -ANEUTRIE -ANEUTRIM
+* ---------------------------------------------------------------------------- *
+*                        BIASING
+* ---------------------------------------------------------------------------- *
+* Regional importance biasing:
+*BIASING           1.        2.        5.     VoDT1     VoDT1        1.PRINT
+*BIASING           1.        2.       10.     VoDT2     VoDT2        1.PRINT
+*BIASING           1.        2.       20.     VoDT3     VoDT3        1.PRINT
+*BIASING           1.        2.       50.     VoDT4     VoDT4        1.PRINT
+*BIASING           1.        2.      100.     VoDT5     VoDT5        1.PRINT
+* Decay length biasing:
+LAM-BIAS       2000.              VACUUM     MUON+     MUON-        1.GDECAY
+LAM-BIAS        200.              VACUUM     PION+     PION-        1.GDECAY
+** Decay direction biasing: Can't get it to work like expected...
+**LAM-BIAS         0.0       0.0        1.     0.001                    DCY-DIRE
+**LAM-BIAS          1.                       NEUTRIE  ANEUTRIE        1.DCDRBIAS
+**LAM-BIAS          1.                       NEUTRIM  ANEUTRIM        1.DCDRBIAS
+* ---------------------------------------------------------------------------- *
+*                        SCORING
+* ---------------------------------------------------------------------------- *
+*
+* *********** Energy binning:
+USRBDX            1.   NEUTRIE      -25.     VoDT5    VoDet2   282743.nue
+USRBDX            1.       0.0       50.     0.001                  1. &
+USRBDX            1.  ANEUTRIE      -26.     VoDT5    VoDet2   282743.anue
+USRBDX            1.       0.0       50.     0.001                  1. &
+USRBDX            1.   NEUTRIM      -27.     VoDT5    VoDet2   282743.numu
+USRBDX            1.       0.0       50.     0.001                  1. &
+USRBDX            1.  ANEUTRIM      -28.     VoDT5    VoDet2   282743.anumu
+USRBDX            1.       0.0       50.     0.001                  1. &
+* *********** Angular binning:
+USRBDX            1.   NEUTRIE      -35.     VoDT5    VoDet2   282743.nuea
+USRBDX            1.       0.0        1.     0.001                 20. &
+USRBDX            1.  ANEUTRIE      -36.     VoDT5    VoDet2   282743.anuea
+USRBDX            1.       0.0        1.     0.001                 20. &
+USRBDX            1.   NEUTRIM      -37.     VoDT5    VoDet2   282743.numua
+USRBDX            1.       0.0        1.     0.001                 20. &
+USRBDX            1.  ANEUTRIM      -38.     VoDT5    VoDet2   282743.anumua
+USRBDX            1.       0.0        1.     0.001                 20. &
+* ************* Remaining Pions:
+USRBDX            1.     PION+      -39.     VoDT5    VoDet2   282743.pip
+USRBDX            1.       0.0       50.                 0.0        1. &
+USRBDX            1.     PION-      -40.     VoDT5    VoDet2   282743.pim
+USRBDX            1.       0.0       50.                 0.0        1. &
+* ************* Remaining muons:
+USRBDX            1.     MUON+      -41.     VoDT5    VoDet2   282743.mup
+USRBDX            1.       0.0       50.                 0.0        1. &
+USRBDX            1.     MUON-      -42.     VoDT5    VoDet2   282743.mum
+USRBDX            1.       0.0       50.                 0.0        1. &
+*
+* ************* Pions exiting:
+USRBDX            1.     PION+      -43.    VoDet1     VoDT1   282743.epip
+USRBDX                     0.0      100.                 0.0       1.0 &
+USRBDX            1.     PION-      -44.    VoDet1     VoDT1   282743.epim
+USRBDX                     0.0      100.                 0.0       1.0 &
+* ************* Muons exiting:
+USRBDX            1.     MUON+      -45.    VoDet1     VoDT1   282743.eup
+USRBDX                     0.0      100.                 0.0       1.0 &
+USRBDX            1.     MUON-      -46.    VoDet1     VoDT1   282743.emum
+USRBDX                     0.0      100.                 0.0       1.0 &
+* *********************
+USERDUMP        100.       33.       0.0        1.                    Dump
+SCORE         ENERGY
+* ---------------------------------------------------------------------------- *
+*                        INITIALIZATION
+* ---------------------------------------------------------------------------- *
+* Set the random number seed:
+RANDOMIZ          1.
+* Set the number of primary histories to be simulated in the run:
+START       1371108.
+*START        100000.
+* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8
+STOP
+STOP
