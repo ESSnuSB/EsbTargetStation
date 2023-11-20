@@ -1,29 +1,4 @@
-import numpy as np
-1 of 266
 
-￼
-
-￼
-
-Print all
-
-In new window
-
-GA_my_Version
-
-￼
-
-vidhya hariharan <vidhya.ph.96@gmail.com>
-
-Nov 16, 2023, 3:04 PM (4 days ago)
-
-￼
-
-￼
-
-to vidhya.thara.hariharan
-
-￼
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
