@@ -587,5 +587,185 @@ def evalOneMax(individual):
 
   #    #Show the plot
   # plt.draw()
-   
+    return npp,
+
+
+#----------
+# Genetic Operator registration
+#----------
+# register the goal / fitness function
+toolbox.register("evaluate", evalOneMax)
+
+# register the crossover operator
+toolbox.register("mate", tools.cxTwoPoint)
+
+# register a mutation operator with a probability to
+# flip each attribute/gene of 0.05
+# toolbox.register("mutate", tools.mutUniformInt, indpb=0.05, low=0, up=100)
+toolbox.register("mutate", tools.mutUniformInt, indpb=0.05, low=0, up=100)
+
+# operator for selecting individuals for breeding the next
+# generation: each individual of the current generation
+# is replaced by the 'fittest' (best) of three individuals
+# drawn randomly from the current generation.
+toolbox.register("select", tools.selTournament, tournsize=3)
+
+#----------
+
+def main():
+    rn.seed(64)
+
+    # create an initial population of 300 individuals (where
+    # each individual is a list of integers)
+    pop = toolbox.population(n=1)   #n is the number of fluka files per generation. or could be the generations
+    # CXPB  is the probability with which two individuals are crossed
+    # MUTPB is the probability for mutating an individual
+    CXPB, MUTPB = 0.7, 0.3
+    # CXPB, MUTPB = 0.9, 0.1
+   
+    print("Start of evaluation")
+    # print("########################################")
+    # Evaluate the entire population
+    fitnesses = list(map(toolbox.evaluate, pop))
+    # print(fitnesses)
+    print("pop",pop)
+    print("fitnesses:", fitnesses)
+   
+    for ind, fit in zip(pop, fitnesses):
+        ind.fitness.values = fit
+   
+    print(" Evaluated %i individuals" % len(pop))
+
+    # Extracting all the fitnesses of
+    fits = [ind.fitness.values[0] for ind in pop]
+   
+    # initialize statistics accumulators:
+    maxFitnessValues = []
+    meanFitnessValues = []
+
+
+    # Variable keeping track of the number of generations
+#    g = 0
+#    count=0
+    global g
+    global count
+
+    length = len(pop)
+    mean = sum(fits) / length
+    sum2 = sum(x*x for x in fits)
+    std = abs(sum2 / length - mean**2)**0.5
+
+    # with open('ga.txt','a') as f:
+    #   f.write(str(g)+'  '+str(mean)+'  '+str(std)+'\n')
+    # print(fits)
+
+    # Begin the evolution: running it through generations(g)
+    # while max(fitnessValues) < ONE_MAX_LENGTH and generationCounter < MAX_GENERATIONS:
+    while max(fits) > 0.1 and g < 10:
+        # A new generation
+        g = g + 1
+        print()
+        # print("----------------------------------------------------")
+        print("--------------------- Generation %i --------------------" % g)
+       
+        # Select the next generation individuals
+        offspring = toolbox.select(pop, len(pop))
+        # the offspring is the list of horn parameters and the length of the offspring is  
+        print(len(offspring[0]),"x",len(offspring))  
+        print("Population:",offspring)
+        # Clone the selected individuals
+        offspring = list(map(toolbox.clone, offspring))
+       
+     
+        # Apply crossover and mutation on the offspring
+        #[::2]picks up every alternate element in trhe sequence
+        #[1::2]picks up the remaining alternate from the previous list
+        for child1, child2 in zip(offspring[::2], offspring[1::2]):
+
+            # cross two individuals with probability CXPB
+            if rn.random() < CXPB:
+                print()
+                print("****** CROSS BREEDING ******")
+                print("PB:",rn.random())
+                print("Parent1:",child1,"Parent2:",child2)
+                toolbox.mate(child1, child2)
+                x=toolbox.mate(child1, child2)
+                print("CrossedOffsprings:",x)
+                print("Fitness:",child1.fitness.values,child2.fitness.values)
+
+                # fitness values of the children
+                # must be recalculated later
+                del child1.fitness.values
+                del child2.fitness.values
+
+        for mutant in offspring:
+
+            # mutate an individual with probability MUTPB
+            if rn.random() < MUTPB:
+                print()
+                print("++++++ MUTATION ++++++")
+                print("PB:",rn.random())
+                print("Mutatnt:",mutant)
+                toolbox.mutate(mutant)
+                xm=toolbox.mutate(mutant)
+                print("Mutated Offspring:",xm)
+                print("Fitness:",mutant.fitness.values)
+               
+                del mutant.fitness.values
+   
+        # Evaluate the individuals with an invalid fitness
+        # freshIndividuals = [ind for ind in offspring if not ind.fitness.valid]
+        invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
+        fitnesses = map(toolbox.evaluate, invalid_ind)
+        # print(fitnesses.__dir__())     # printing objects
+        for ind, fit in zip(invalid_ind, fitnesses):
+            # print("Individual:",ind)
+            ind.fitness.values = fit
+       
+        # print("  Evaluated %i individuals" % len(invalid_ind))
+        # print(invalid_ind)
+       
+        # The population is entirely replaced by the offspring
+        pop[:] = offspring
+       
+        # Gather all the fitnesses in one list and print the stats
+        fits = [ind.fitness.values[0] for ind in pop]
+       
+        length = len(pop)
+        mean = sum(fits) / length
+        sum2 = sum(x*x for x in fits)
+        std = abs(sum2 / length - mean**2)**0.5
+       
+        print("  Min %s" % min(fits))
+        print("  Max %s" % max(fits))
+        print("  Avg %s" % mean)
+        print("  Std %s" % std)
+       
+        maxFitness = max(fits)
+        meanFitness = sum(fits) / len(pop)
+        maxFitnessValues.append(maxFitness)
+        meanFitnessValues.append(meanFitness)      
+       
+        print("- Generation {}: Max Fitness = {}, Avg Fitness = {}".format(g, maxFitness, meanFitness))
+
+    print("-- End of (successful) evolution --")
+   
+    best_ind = tools.selBest(pop, 1)[0]
+    print("Best individual is %s, %s" % (best_ind, best_ind.fitness.values))
+   
+    # Genetic Algorithm is done - plot statistics:
+    fig = plt.figure(figsize = (12,9))
+    plt.plot(maxFitnessValues, color='red',label='Max')
+    plt.plot(meanFitnessValues, color='green',label='Mean')
+    plt.legend(loc="lower right",fontsize=12)
+    plt.xlabel('Generation',fontsize=15)
+    plt.ylabel('Max / Mean Fitness',fontsize=15)
+    plt.title('Max and Average Fitness over Generations')
+    plt.show()
+   
+   
+   
+    # The best individuals could be L1, L2, L3, L4, L5, R2, R3, ztg, Ldt
+if __name__ == "__main__":
+    main()
 
